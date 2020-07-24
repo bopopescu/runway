@@ -4,7 +4,7 @@
 
     The results of the AFT feedback is logged in three tables described below.
 
-    s1-analytics-slave.eqiad.wmnet.enwiki.aft_article_feedback: ::
+    s1-analytics-subordinate.eqiad.wmnet.enwiki.aft_article_feedback: ::
         +--------------------------+------------------+------+-----+----------------+----------------+
         | Field                    | Type             | Null | Key | Default        | Extra          |
         +--------------------------+------------------+------+-----+----------------+----------------+
@@ -47,7 +47,7 @@
         | af_last_status_notes     | varbinary(255)   | YES  |     | NULL           |                |
         +--------------------------+------------------+------+-----+----------------+----------------+
 
-    s1-analytics-slave.eqiad.wmnet.enwiki.aft_article_answer: ::
+    s1-analytics-subordinate.eqiad.wmnet.enwiki.aft_article_answer: ::
         +-----------------------+------------------+------+-----+---------+-------+
         | Field                 | Type             | Null | Key | Default | Extra |
         +-----------------------+------------------+------+-----+---------+-------+
@@ -60,7 +60,7 @@
         | aa_response_option_id | int(10) unsigned | YES  |     | NULL    |       |
         +-----------------------+------------------+------+-----+---------+-------+
 
-    s1-analytics-slave.eqiad.wmnet.enwiki.aft_article_answer_text: ::
+    s1-analytics-subordinate.eqiad.wmnet.enwiki.aft_article_answer_text: ::
         +-------------------+------------------+------+-----+---------+----------------+
         | Field             | Type             | Null | Key | Default | Extra          |
         +-------------------+------------------+------+-----+---------+----------------+
@@ -68,7 +68,7 @@
         | aat_response_text | blob             | NO   |     | NULL    |                |
         +-------------------+------------------+------+-----+---------+----------------+
 
-    s1-analytics-slave.eqiad.wmnet.enwiki.logging: ::
+    s1-analytics-subordinate.eqiad.wmnet.enwiki.logging: ::
         +---------------+---------------------+------+-----+----------------+----------------+
         | Field         | Type                | Null | Key | Default        | Extra          |
         +---------------+---------------------+------+-----+----------------+----------------+
@@ -163,7 +163,7 @@ class AFTFeedbackFactory(object):
 
     def __iter__(self, **kwargs):
 
-        conn = dl.Connector(instance='slave')
+        conn = dl.Connector(instance='subordinate')
         is_gen, start_date, end_date =  self.process_kwargs(**kwargs)
 
         sql =\
@@ -238,7 +238,7 @@ class AFTFeedbackFactory(object):
     def _get_logging_events(self, **kwargs):
         """ pull moderated feedback from the logging table separately """
 
-        conn = dl.Connector(instance='slave')
+        conn = dl.Connector(instance='subordinate')
         is_gen, start_date, end_date =  self.process_kwargs(**kwargs)
 
         # Note for this query to function it is dependent on the form of `log_params` in the logging table
